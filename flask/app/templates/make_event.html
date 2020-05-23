@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+ <div class="container pt-5 pb-5 border">
+    <div class="jumbotron col-md-4 mx-auto" style="background:transparent;">
+        <form method="POST" action="" novalidate>
+          {{ form.hidden_tag() }}
+          <fieldset class="form-group">
+            <legend class="border-bottom mb-4 text-center" style="color:white;">
+                <h2 class="font-weight-light">Create an Event</h2>
+            </legend>
+            <div class="form-group">
+               
+                {{ form.title(class="form-control form-control-md font-weight-lighter", placeholder="Title", style="background-color:transparent !important; color:white;") }}
+                
+            </div>
+            <div class="form-group">
+                {{ form.details(class="form-control form-control-md font-weight-lighter", placeholder="Details", style="background-color:transparent !important; color:white;") }}
+             
+            </div>
+            <div class="form-group">
+                {{ form.start_time(type="datetime-local", class="form-control form-control-md font-weight-lighter", placeholder="Start Time", style="background-color:transparent !important; color:white;") }}
+             
+            </div>
+            <div class="form-group">
+                {{ form.max_participant(type="number", class="form-control form-control-md font-weight-lighter", placeholder="Max Number of Participants", style="background-color:transparent !important; color:white;") }}
+             
+            </div>
+          </fieldset>
+          <div class="form-group">
+            {{ form.submit(class="btn btn-sm btn-primary btn-block") }}
+          </div>
+        </form>
+    </div> 
+</div>
+{% endblock %}

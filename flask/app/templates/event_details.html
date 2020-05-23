@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>, {{ post.title }}!</h1>
+
+    <div><p>{{ post.title }}  :</p>
+        <h2>Event Details: </h2>
+        <b>{{ post.body }}</b></div>
+    {% if user.user_level <= 2 %}
+        <p>
+            <form action="{{ url_for('verify', id =post.id) }}" method="post">
+                {{ form.hidden_tag() }}
+                {{ form.submit(value='verify') }}
+            </form>
+        </p>
+
+    {% elif not post.has_joined(user)  %}
+        <p>
+            <form action="{{ url_for('join', id =post.id) }}" method="post">
+                {{ form.hidden_tag() }}
+                {{ form.submit(value='join') }}
+            </form>
+        </p>
+    {% elif not post.has_joined(user) %}
+    <form action="{{ url_for('leave', id=post.id) }}" method="post">
+                {{ form.hidden_tag() }}
+                {{ form.submit(value='Unfollow') }}
+    </form>
+
+    {% endif %}
+
+
+    {% if post.user_id == user.id or user_level < 3 %}
+        <h2>List of participants</h2>
+    {% for user in list_of_participants  %}
+            <div><p>{{user.username }} </p></div>
+    {% endfor %}
+        <form action="{{ url_for('delete_event', id=post.id) }}" method="post">
+                {{ form.hidden_tag() }}
+                {{ form.submit(value='delete') }}
+        </form>
+    {% endif %}
+
+
+
+
+{%  endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container pt-5 pb-5">
+	<h1 style="text-align: center">
+		500 internal error found
+		<br>
+		<small>Errors found in message, changes are not committed</small>
+	</h1>
+    <p style="text-align: center"><a href="{{ url_for('index') }}">Back</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-sm pt-5 border">
+    <div class="jumbotron col-md-4 mx-auto" style="background:transparent;">
+        <form method="POST" action="">
+          {{ form.hidden_tag() }}
+          <fieldset class="form-group">
+            <legend class="border-bottom mb-4 text-center" style="color:white;">
+                <h2 class="font-weight-light">Create a New Account</h2>
+                <h6 class="text-small font-weight-lighter">Register now to access Commservicer</h6>
+            </legend>
+            <div class="form-group">
+                {{ form.username(class="form-control form-control-md font-weight-lighter", placeholder="Username", style="background-color:transparent !important; color:white;") }}
+                {% for error in form.username.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.email(class="form-control form-control-md font-weight-lighter", placeholder="Email", style="background-color:transparent !important; color:white;") }}
+                {% for error in form.email.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.password(class="form-control form-control-md font-weight-lighter", placeholder="Password", style="background-color:transparent !important; color:white;") }}
+                {% for error in form.password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.passwordcheck(class="form-control form-control-md font-weight-lighter", placeholder="Confirm Password", style="background-color:transparent !important; color:white;") }}
+                {% for error in form.passwordcheck.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+          </fieldset>
+          <div class="form-group">
+            {{ form.submit(class="btn btn-sm btn-primary btn-block") }}
+          </div>
+        </form>
+        <div class="border-top pt-3 text-center">
+            <small style="color:lightgray;">
+                Already have an account? <a class="ml-2" href="{{ url_for('login') }}">Log in</a>
+            </small>
+        </div>
+    </div> 
+</div>
+{% endblock content %}

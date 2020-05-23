@@ -1,0 +1,31 @@
+<div class="jumbotron pt-3 pb-3">
+     <table class="table table-borderless" style="width: 100%">
+        <tr valign="top">
+            {#<td><img src="{{ post.user_id.avatar(36) }}"></td>#}
+            <td>
+                <a href="{{ url_for('event_details', id=post.id) }}">
+                    <h2 class="text-capitalize">{{ post.title }}</h2>
+                </a>
+                <hr>
+                <h6>Details:</h6>
+                <p class="text-capitalize">{{ post.body }}<p>
+                {% if not post.has_joined(user)%}
+                    <form action="{{ url_for('join', id =post.id) }}" method="post">
+                        <div class="form-group text-center">
+                            {{ form.hidden_tag() }}
+                            {{ form.submit(value='Join', class="btn btn-primary", style="width:200px;") }}
+                        </div>
+                    </form>
+                {% else %}
+                    <form action="{{ url_for('leave', id=post.id) }}" method="post">
+                        <div class="form-group">
+                            {{ form.hidden_tag() }}
+                            {{ form.submit(value='Unfollow', class="btn btn-primary", style="width:200px;") }}
+                        </div>
+                    </form>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+ </div>
+ <br>
