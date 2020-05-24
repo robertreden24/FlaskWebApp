@@ -58,5 +58,5 @@ class EmptyForm(FlaskForm):
 
 class ResetPasswordRequestForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(),Email()])
-    submit = SubmitField('Reset Password request')
+    submit = SubmitField('Reset Password Request')
 
