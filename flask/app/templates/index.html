@@ -1,5 +1,5 @@
-{%  extends "base.html"%}
-{%  block content %}
+{% extends "base.html" %}
+{% block content %}
      <div class="container pt-5 pb-5">
 		 <h1 style="color: lightgray;">Welcome, {{ current_user.username }}!</h1>
 		 <br>
@@ -13,4 +13,4 @@
             <a href="{{ next_url }}">Older events</a>
         {% endif %}
 	</div>
-{%  endblock %};
+{% endblock %};
