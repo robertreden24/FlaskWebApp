@@ -4,11 +4,11 @@
             {#<td><img src="{{ post.user_id.avatar(36) }}"></td>#}
             <td>
                 <a href="{{ url_for('event_details', id=post.id) }}">
-                    <h2 class="text-capitalize">{{ post.title }}</h2>
+                    <h1 class="text-capitalize" style="font-family: candara">{{ post.title }}</h1>
                 </a>
                 <hr>
-                <h6>Details:</h6>
-                <p class="text-capitalize">{{ post.body }}<p>
+                <h4 style="font-family: candara">Details:</h4>
+                <p class="text-capitalize text-justify" style="font-family: candara">{{ post.body }}<p>
                 {% if not post.has_joined(user) and user == current_user %}
                     <form action="{{ url_for('join', id =post.id) }}" method="post">
                         <div class="form-group text-center">

@@ -1,46 +1,54 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="container pt-5 border">
+<!-- <div class="view" style="width: 100%; height: 100%; position: absolute;) !important;"> -->
+    <div class="container pt-5 pb-5">
         <div class="jumbotron">
         <h1 class="text-capitalize">{{ post.title }}</h1>
         <hr>
-        <!-- <p>{{ post.title }}  :</p> -->
         <h4>Event Details: </h4>
         <p class="text-capitalize">{{ post.body }}</p>
     
         {% if user.user_level <= 2 %}
-            <p>
+            <div class="form-group text-center">
                 <form action="{{ url_for('verify', id =post.id) }}" method="post">
                     {{ form.hidden_tag() }}
                     {{ form.submit(value='Verify', class="btn btn-primary", style="width:200px;") }}
                 </form>
-            </p>
+            </div>
 
         {% elif not post.has_joined(user)  %}
-            <p>
+            <div class="form-group text-center">
                 <form action="{{ url_for('join', id =post.id) }}" method="post">
                     {{ form.hidden_tag() }}
                     {{ form.submit(value='Join', class="btn btn-primary", style="width:200px;") }}
                 </form>
-            </p>
+            </div>
         {% elif not post.has_joined(user) %}
-            <form action="{{ url_for('leave', id=post.id) }}" method="post">
+            <div class="form-group text-center">
+                <form action="{{ url_for('leave', id=post.id) }}" method="post">
                         {{ form.hidden_tag() }}
                         {{ form.submit(value='Unfollow', class="btn btn-primary", style="width:200px;") }}
-            </form>
+                </form>
+            </div>
         {% endif %}
 
 
         {% if post.user_id == user.id or user.user_level < 3 %}
             <h2>List of participants</h2>
+            <hr>
         {% for user in list_of_participants  %}
-                <div><p>{{user.username }} </p></div>
+                <div>
+                    <p>{{ user.username }}</p>
+                </div>
         {% endfor %}
-            <form action="{{ url_for('delete_event', id=post.id) }}" method="post">
-                    {{ form.hidden_tag() }}
-                    {{ form.submit(value='delete') }}
-            </form>
+            <div class="form-group text-center">
+                <form action="{{ url_for('delete_event', id=post.id) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Delete', class="btn btn-primary", style="width:200px;") }}
+                </form>
+            </div>
         {% endif %}
         </div>
     </div>
+<!-- </div> -->
 {% endblock %}
