@@ -24,13 +24,12 @@
                         </div>
                     </form>
                 {% endif %}
-                {% if not user.user_level > 2 and post.verify == False %}
-                    <p>
+                {% if  user.user_level < 3 and post.verified == False %}
                 <form action="{{ url_for('verify', id =post.id) }}" method="post">
                     {{ form.hidden_tag() }}
                     {{ form.submit(value='Verify', class="btn btn-primary", style="width:200px;") }}
                 </form>
-                    </p>
+
                 {% endif %}
             </td>
         </tr>
