@@ -7,7 +7,14 @@
         <!-- <p>{{ post.title }}  :</p> -->
         <h4>Event Details: </h4>
         <p class="text-capitalize">{{ post.body }}</p>
-    
+
+            <h4>Expected social hours: </h4>
+            {% if post.start_time != None %}
+        <p class="text-capitalize">{{ post.start_time }}</p>
+        {% else %}
+            <p class="text-capitalize">Not available yet</p>
+            {% endif %}
+
         {% if user.user_level <= 2 %}
             <p>
                 <form action="{{ url_for('verify', id =post.id) }}" method="post">
@@ -36,11 +43,15 @@
         {% for user in list_of_participants  %}
                 <div><p>{{user.username }} </p></div>
         {% endfor %}
+            {% endif %}
+
+
+
             <form action="{{ url_for('delete_event', id=post.id) }}" method="post">
                     {{ form.hidden_tag() }}
                     {{ form.submit(value='delete') }}
             </form>
-        {% endif %}
+
         </div>
     </div>
 {% endblock %}
