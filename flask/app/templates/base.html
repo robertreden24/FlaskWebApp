@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     {% if title %}
-    <title>Commservicer - {{ title }}</title>
+        <title>Commservicer - {{ title }}</title>
     {% else %}
-    <title>Commservicer</title>
+        <title>Commservicer</title>
     {% endif %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,7 +71,7 @@
     {% endwith %}
 
     <div class="view" style="background-image: url('../static/images/bluebg.jpg'); background-size: cover; 
-                        -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; height: 100%; width: 100%; position: absolute;">
+                        -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; height: 100%; width: 100%; position: absolute; overflow-y: scroll;">
         {% block content %} 
         {% endblock content %}
     </div>

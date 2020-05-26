@@ -1,4 +1,4 @@
-<div class="jumbotron pt-3 pb-3">
+<div class="jumbotron pt-3 pb-3" style="background-color: white;">
      <table class="table table-borderless" style="width: 100%">
         <tr valign="top">
             {#<td><img src="{{ post.user_id.avatar(36) }}"></td>#}
@@ -8,7 +8,7 @@
                 </a>
                 <hr>
                 <h4 style="font-family: candara">Details:</h4>
-                <p class="text-capitalize text-justify" style="font-family: candara">{{ post.body }}<p>
+                <p class="text-capitalize text-justify text-break" style="font-family: candara">{{ post.body }}<p>
                 {% if not post.has_joined(user) and user == current_user %}
                     <form action="{{ url_for('auth.join', id =post.id) }}" method="post">
                         <div class="form-group text-center">
