@@ -10,7 +10,7 @@
     
         {% if user.user_level <= 2 %}
             <div class="form-group text-center">
-                <form action="{{ url_for('verify', id =post.id) }}" method="post">
+                <form action="{{ url_for('auth.verify', id =post.id) }}" method="post">
                     {{ form.hidden_tag() }}
                     {{ form.submit(value='Verify', class="btn btn-primary", style="width:200px;") }}
                 </form>
@@ -18,14 +18,14 @@
 
         {% elif not post.has_joined(user)  %}
             <div class="form-group text-center">
-                <form action="{{ url_for('join', id =post.id) }}" method="post">
+                <form action="{{ url_for('auth.join', id =post.id) }}" method="post">
                     {{ form.hidden_tag() }}
                     {{ form.submit(value='Join', class="btn btn-primary", style="width:200px;") }}
                 </form>
             </div>
         {% elif not post.has_joined(user) %}
             <div class="form-group text-center">
-                <form action="{{ url_for('leave', id=post.id) }}" method="post">
+                <form action="{{ url_for('auth.leave', id=post.id) }}" method="post">
                         {{ form.hidden_tag() }}
                         {{ form.submit(value='Unfollow', class="btn btn-primary", style="width:200px;") }}
                 </form>
@@ -42,7 +42,7 @@
                 </div>
         {% endfor %}
             <div class="form-group text-center">
-                <form action="{{ url_for('delete_event', id=post.id) }}" method="post">
+                <form action="{{ url_for('auth.delete_event', id=post.id) }}" method="post">
                         {{ form.hidden_tag() }}
                         {{ form.submit(value='Delete', class="btn btn-primary", style="width:200px;") }}
                 </form>

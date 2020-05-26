@@ -3,21 +3,21 @@
         <tr valign="top">
             {#<td><img src="{{ post.user_id.avatar(36) }}"></td>#}
             <td>
-                <a href="{{ url_for('event_details', id=post.id) }}">
+                <a href="{{ url_for('auth.event_details', id=post.id) }}">
                     <h1 class="text-capitalize" style="font-family: candara">{{ post.title }}</h1>
                 </a>
                 <hr>
                 <h4 style="font-family: candara">Details:</h4>
                 <p class="text-capitalize text-justify" style="font-family: candara">{{ post.body }}<p>
                 {% if not post.has_joined(user) and user == current_user %}
-                    <form action="{{ url_for('join', id =post.id) }}" method="post">
+                    <form action="{{ url_for('auth.join', id =post.id) }}" method="post">
                         <div class="form-group text-center">
                             {{ form.hidden_tag() }}
                             {{ form.submit(value='Join', class="btn btn-primary", style="width:200px;") }}
                         </div>
                     </form>
                 {% elif post.has_joined(user) %}
-                    <form action="{{ url_for('leave', id=post.id) }}" method="post">
+                    <form action="{{ url_for('auth.leave', id=post.id) }}" method="post">
                         <div class="form-group">
                             {{ form.hidden_tag() }}
                             {{ form.submit(value='Unfollow', class="btn btn-primary", style="width:200px;") }}
@@ -25,7 +25,7 @@
                     </form>
                 {% endif %}
                 {% if  user.user_level < 3 and post.verified == False %}
-                <form action="{{ url_for('verify', id =post.id) }}" method="post">
+                <form action="{{ url_for('auth.verify', id =post.id) }}" method="post">
                     {{ form.hidden_tag() }}
                     {{ form.submit(value='Verify', class="btn btn-primary", style="width:200px;") }}
                 </form>
