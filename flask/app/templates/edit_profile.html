@@ -1,23 +1,23 @@
 {%  extends "base.html" %}
 {%  block content %}
-    <div class="container pt-5 pb-5 border">
-        <div class="jumbotron mx-auto col-md-4" style="background-image: url('/static/images/bgheader.jpg'); background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    <div class="container pt-5 pb-5">
+        <div class="jumbotron mx-auto col-md-4" style="background:transparent;>
             <form action="" method="post">
                 {{ form.hidden_tag() }}
-                <fieldset class="form-group">
-                    <legend class="form-group">
-                        <h1 style="font-family: candara; color: white">Edit Profile</h1>
+                <fieldset class="form-group" style="color:white; font-family: candara" >
+                    <legend class="form-group border-bottom mb-4 text-center">
+                        <h1 class="font-weight-light">Edit Profile</h1>
                     </legend>
                     <div class="form-group">
-                        {{ form.username.label(style="color:white; font-family: candara;") }}<br>
-                        {{ form.username(size=36, style="background:transparent; color:white; font-family: candara;") }}<br>
+                        {{ form.username.label() }}<br>
+                        {{ form.username(size=36, style="background-color:white;") }}<br>
                         {% for error in form.username.errors %}
                             <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{ form.about_me.label(style="color:white; font-family: candara;") }}<br>
-                        {{ form.about_me(cols=35, rows=4, style="background:transparent; color:white; font-family: candara;") }}<br>
+                        {{ form.about_me.label() }}<br>
+                        {{ form.about_me(cols=35, rows=4, style="background-color:white;") }}<br>
                         {% for error in form.about_me.errors %}
                             <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
