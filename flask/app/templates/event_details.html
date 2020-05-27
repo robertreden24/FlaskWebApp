@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="container pt-5 pb-5">
-        <div class="jumbotron">
-        <h1 class="text-capitalize">{{ post.title }}</h1>
+        <div class="jumbotron" style="background-color: white;">
+        <h1 class="text-capitalize font-weight-bold" style="font-family: candara">{{ post.title }}</h1>
         <hr>
-        <h4>Event Details: </h4>
-        <p class="text-capitalize">{{ post.body }}</p>
+        <h4 style="font-family: candara">Event Details:</h4>
+        <p class="text-capitalize" style="font-family: candara">{{ post.body }}</p>
     
         {% if user.user_level <= 2 %}
             <div class="form-group text-center">
