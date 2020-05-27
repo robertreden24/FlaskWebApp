@@ -26,7 +26,7 @@
                 <div class="form-group">
                     {{ form.remember_me(class="ml-1") }} {{ form.remember_me.label(class="form-control-label small font-weight-light ml-1", style="color:lightgray;") }}
                     <small style="color:lightgray;">
-                        <a class="pl-5 ml-4" href="{{ url_for('reset_password_request') }}">Forgot password?</a>
+                        <a class="pl-5 ml-4" href="{{ url_for('auth.reset_password_request') }}">Forgot password?</a>
                     </small>
                 </div>
 
@@ -37,7 +37,7 @@
             </form>
             <div class="border-top pt-3 text-center">
                 <small style="color:lightgray;">
-                    Haven't made an account? <a class="ml-2" href="{{ url_for('register') }}">Register Now</a>
+                    Haven't made an account? <a class="ml-2" href="{{ url_for('auth.register') }}">Register Now</a>
                 </small>
             </div>
 

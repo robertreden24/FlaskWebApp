@@ -1,6 +1,6 @@
 {%  extends "base.html" %}
 {% block content %}
-<div class="jumbotron pt-5" style="background-image: url('../static/images/bgheader.jpg'); background-size: cover;
+<div class="jumbotron pt-5" style="background-image: url('/static/images/bgheader.jpg'); background-size: cover;
                         -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
     <div class="row">
         <img src="{{ user.avatar(150) }}" class="mx-auto rounded-circle">
@@ -21,7 +21,11 @@
     {% endif %}
     {% if user == current_user %}
         <div class="row">
-            <p style="font-family: candara; color: white" class="mx-auto"><a href="{{ url_for('auth.edit_profile') }}">Edit Profile</a></p>
+            <p style="font-family: candara; color: white" class="mx-auto">
+                <a href="{{ url_for('auth.edit_profile') }}">
+                    Edit Profile
+                </a>
+            </p>
         </div>
     {% endif %}
 </div>
