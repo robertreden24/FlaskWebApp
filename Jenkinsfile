@@ -1,8 +1,10 @@
 pipeline{
 
-	agent any
+	agent{
+		dockerfile true
+	}
 
-	node{
+	stages{
 		stage('Git Hub Checkout'){
 			git credentialsId: 'b255cf65-b055-4120-be88-1a4264f5caca', url: 'https://github.com/robertreden24/FlaskWebApp'}
 		}
