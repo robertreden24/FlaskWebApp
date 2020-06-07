@@ -16,16 +16,21 @@ from app.auth.email import send_password_reset_email
 @login_required
 def edit_profile():
     form = EditProfileForm(current_user.username)
+    print("not here")
+    print(form.username.data)
+    print(form.about_me.data)
     if form.validate_on_submit():
         current_user.username = form.username.data
+        print("in here")
         current_user.about_me = form.about_me.data
         db.session.commit()
         flash('Username and profile changed', 'success')
-        return redirect(url_for('auth.edit_profile'))
-    elif request.method == 'GET':
-        form.username.data = current_user.username
-        form.about_me.data = current_user.about_me
-    return render_template('edit_profile.html', title='Edit Profile', form=form)
+        return redirect(url_for('auth.user', username= current_user.username))
+    # elif request.method == 'GET':
+    #     form.username.data = current_user.username
+    #     form.about_me.data = current_user.about_me
+    #     print("in here instead")
+    return render_template('edit_profile.html', title='Edit Profile',form=form)
 
 
 @bp.before_request

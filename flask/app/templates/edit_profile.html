@@ -1,7 +1,7 @@
 {%  extends "base.html" %}
 {%  block content %}
     <div class="container pt-5 pb-5">
-        <div class="jumbotron mx-auto col-md-4" style="background:transparent;>
+        <div class="jumbotron mx-auto col-md-4" style="background:transparent;">
             <form action="" method="post">
                 {{ form.hidden_tag() }}
                 <fieldset class="form-group" style="color:white; font-family: candara" >
@@ -9,14 +9,14 @@
                         <h1 class="font-weight-light">Edit Profile</h1>
                     </legend>
                     <div class="form-group">
-                        {{ form.username.label() }}<br>
+                        {{ form.username.label }}<br>
                         {{ form.username(size=36, style="background-color:white;") }}<br>
                         {% for error in form.username.errors %}
                             <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{ form.about_me.label() }}<br>
+                        {{ form.about_me.label }}<br>
                         {{ form.about_me(cols=35, rows=4, style="background-color:white;") }}<br>
                         {% for error in form.about_me.errors %}
                             <span style="color: red;">[{{ error }}]</span>
@@ -24,9 +24,31 @@
                     </div>
                 </fieldset>
                 <div class="form-group">
-                    {{ form.submit(class="btn btn-sm btn-primary btn-block", value="Edit") }}
+                    {{ form.submit(class="btn btn-sm btn-primary btn-block") }}
                 </div>
             </form>
         </div>
     </div>
 {% endblock %}
+{##}
+{#{% block content %}#}
+{#    <h1>Edit Profile</h1>#}
+{#    <form action="" method="post">#}
+{#        {{ form.hidden_tag() }}#}
+{#        <p>#}
+{#            {{ form.username.label }}<br>#}
+{#            {{ form.username(size=32) }}<br>#}
+{#            {% for error in form.username.errors %}#}
+{#            <span style="color: red;">[{{ error }}]</span>#}
+{#            {% endfor %}#}
+{#        </p>#}
+{#        <p>#}
+{#            {{ form.about_me.label }}<br>#}
+{#            {{ form.about_me(cols=50, rows=4) }}<br>#}
+{#            {% for error in form.about_me.errors %}#}
+{#            <span style="color: red;">[{{ error }}]</span>#}
+{#            {% endfor %}#}
+{#        </p>#}
+{#        <p>{{ form.submit() }}</p>#}
+{#    </form>#}
+{#{% endblock %}#}

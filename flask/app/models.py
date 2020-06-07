@@ -61,6 +61,7 @@ class Post(db.Model):
     max_participant = db.Column(db.Integer)
     verified = db.Column(db.BOOLEAN,nullable=False,default = False)
 
+
     participant_count = db.relationship('User', secondary=participants,
                                         primaryjoin =(participants.c.post_id == id),
                                         secondaryjoin =(participants.c.user_id == User.id),
