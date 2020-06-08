@@ -60,7 +60,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     max_participant = db.Column(db.Integer)
     verified = db.Column(db.BOOLEAN,nullable=False,default = False)
-
+    socialHours = db.Column(db.Integer)
 
     participant_count = db.relationship('User', secondary=participants,
                                         primaryjoin =(participants.c.post_id == id),
