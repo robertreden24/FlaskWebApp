@@ -1,2 +1,2 @@
-def bad_rquest():
+def bad_request():
     pass
