@@ -22,7 +22,10 @@
              
             </div>
             <div class="form-group">
-                {{ form.max_participant(type="number", class="form-control form-control-md font-weight-lighter", placeholder="Max Number of Participants", style="background-color:transparent !important; color:white;") }}
+                {{ form.socialHours(type="number", max="10", min="1", class="form-control form-control-md font-weight-lighter", placeholder="Social Hours", style="background-color:transparent !important; color:white;") }}
+            </div>
+            <div class="form-group">
+                {{ form.max_participant(type="number", max="100", min="1", class="form-control form-control-md font-weight-lighter", placeholder="Max Number of Participants", style="background-color:transparent !important; color:white;") }}
              
             </div>
           </fieldset>
