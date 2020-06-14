@@ -135,7 +135,7 @@ def make_event():
         db.session.add(post)
         db.session.commit()
         flash('We have received your application', 'success')
-        return redirect(url_for('index'))
+        return redirect(url_for('auth.index'))
     return render_template('make_event.html', user=current_user, form=form)
 
 @bp.route('/verify_events')

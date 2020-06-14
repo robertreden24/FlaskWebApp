@@ -263,20 +263,21 @@ from app.auth.forms import EditProfileForm,ResetPasswordRequestForm
 @bp.route('/index')
 @login_required
 def index():
-    page = request.args.get('page',1,type = int)
-    posts = Post.query.filter_by(verified=True).order_by(Post.timestamp.desc())
-    posts = posts.paginate(page, current_app.config['EVENTS_PER_PAGE'],False)
-    # posts = Post.query.order_by(Post.timestamp.desc()).all() #change this to only query for verified ones only
-    form = EmptyForm()
-    verify = False
-    if posts.has_next:
-        next_url = url_for('auth.index', page=posts.next_num)
-    else:
-        next_url = None
-    if posts.has_prev:
-        prev_url = url_for('auth.index', page=posts.next_num)
-    else:
-        prev_url = None
-    return render_template('index.html', title='Home Page',
-                           posts=posts.items, user = current_user, form = form, verify = verify,
-                           next_url=next_url, prev_url=prev_url)
+    # page = request.args.get('page',1,type = int)
+    # posts = Post.query.filter_by(verified=True).order_by(Post.timestamp.desc())
+    # posts = posts.paginate(page, current_app.config['EVENTS_PER_PAGE'],False)
+    # # posts = Post.query.order_by(Post.timestamp.desc()).all() #change this to only query for verified ones only
+    # form = EmptyForm()
+    # verify = False
+    # if posts.has_next:
+    #     next_url = url_for('auth.index', page=posts.next_num)
+    # else:
+    #     next_url = None
+    # if posts.has_prev:
+    #     prev_url = url_for('auth.index', page=posts.next_num)
+    # else:
+    #     prev_url = None
+    # return render_template('index.html', title='Home Page',
+    #                        posts=posts.items, user = current_user, form = form, verify = verify,
+    #                        next_url=next_url, prev_url=prev_url)
+    return redirect(url_for('auth.index'))

@@ -6,7 +6,7 @@ from flask_login import UserMixin
 from hashlib import md5
 from time import time
 import jwt
-from flask import current_app
+from flask import current_app,url_for
 
 
 participants = db.Table('participants',
@@ -40,7 +40,28 @@ class User(UserMixin, db.Model):
             digest, size)
 
     def get_reset_password_token(self,expires_in=600):
-        return jwt.encode({'reset_password': self.id, 'exp': time() + expires_in},app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+        return jwt.encode({'reset_password': self.id, 'exp': time() + expires_in},current_app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+
+    def to_dict(self, include_email = False):
+        data = {'id': self.id,
+            'username': self.username,
+            'user_level': self.user_level,
+            'about_me':self.about_me,
+            'last_seen': self.start_time.isoformat() +'+7',
+            'links': {
+                'self':url_for('api.get_user',id=self.id),
+            }
+        }
+        if (include_email):
+            data['email']=self.email
+        return data
+
+    def from_dict(self, data, new_user=False):
+        for field in ['username', 'email', 'about_me']:
+            if field in data:
+                setattr(self, field, data[field])
+        if new_user and 'password' in data:
+            self.set_password(data['password'])
 
     @staticmethod
     def verify_reset_password_token(token):
@@ -89,6 +110,27 @@ class Post(db.Model):
         return User.query.join(participants,(participants.c.user_id == User.id)).\
             filter(participants.c.post_id == self.id).all()
 
+    def to_dict(self, include_email = False):
+        data = {'id': self.id,
+            'title': self.title,
+            'body': self.body,
+            'timestamp':self.timestamp.isoformat() + '+7',
+            'start_time': self.start_time.isoformat() +'+7',
+            'user_id': self.user_id,
+            'max_participant': self.max_participant,
+            'verified': self.verified,
+            'socialHours': self.socialHours,
+            'links': {
+                'self':url_for('api.get_post',id=self.id),
+                'participants':url_for('api.get_post_participants', id=self.id)
+            }
+        }
+        return data
+    def from_dict(self,data):
+        for field in ['title','body','start_time',
+                      'user_id','max_participant','verified','socialHours']:
+            if field in data:
+                setattr(self,field,data[field])
 
 @login.user_loader
 def load_user(id):

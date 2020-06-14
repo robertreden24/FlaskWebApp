@@ -12,7 +12,5 @@ def get_post(id):
 def get_post_participants(id):
     pass
 
-@bp.route('/users', methods=['POST'])
-def create_user():
-    pass
+
 
