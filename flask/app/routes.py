@@ -261,7 +261,6 @@ from app.auth.forms import EditProfileForm,ResetPasswordRequestForm
 #
 @bp.route('/')
 @bp.route('/index')
-@login_required
 def index():
     # page = request.args.get('page',1,type = int)
     # posts = Post.query.filter_by(verified=True).order_by(Post.timestamp.desc())

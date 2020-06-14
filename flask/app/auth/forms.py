@@ -51,7 +51,7 @@ class PostForm(FlaskForm):
     start_time = DateTimeField('expected date of project',format='%m/%d/%y %H:%M')
     max_participant = IntegerField('No of participants',validators=[
         DataRequired(number_range(min=1,max=100)) ])
-    socialHours = IntegerField('No of participants',validators=[number_range(min= 1, max = 100)])
+    socialHours = IntegerField('Number of Social Hours',validators=[number_range(min= 1, max = 100)])
     submit = SubmitField('Post')
 
 class EmptyForm(FlaskForm):

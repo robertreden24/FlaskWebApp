@@ -72,7 +72,7 @@ def login():
         if user is None or not user.check_password(form.password.data):
             # flash('Login requested for user {}, remember_me={}'.format(
             flash('Invalid username or password', 'danger')
-            return redirect(url_for('login'))
+            return redirect(url_for('auth.login'))
         login_user(user,remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
@@ -131,7 +131,9 @@ def make_event():
         print("in here")
         post = Post(title=form.title.data, body = form.details.data,
                     user_id = current_user.id,max_participant=form.max_participant.data,
-                    start_time = form.start_time.data)
+                    start_time = form.start_time.data,
+                    socialHours=form.socialHours,
+                    )
         db.session.add(post)
         db.session.commit()
         flash('We have received your application', 'success')

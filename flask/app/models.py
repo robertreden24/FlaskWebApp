@@ -13,8 +13,30 @@ participants = db.Table('participants',
                         db.Column('user_id', db.Integer, db.ForeignKey('user.id'),primary_key=True),
                         db.Column('post_id', db.Integer, db.ForeignKey('post.id'),primary_key=True))
 
+class PaginatedAPIMixin(object):
+    @staticmethod
+    def to_collection_dict(query, page, per_page, endpoint, **kwargs):
+        resources = query.paginate(page, per_page, False)
+        data = {
+            'items': [item.to_dict() for item in resources.items],
+            '_meta': {
+                'page': page,
+                'per_page': per_page,
+                'total_pages': resources.pages,
+                'total_items': resources.total
+            },
+            '_links': {
+                'self': url_for(endpoint, page=page, per_page=per_page,
+                                **kwargs),
+                'next': url_for(endpoint, page=page + 1, per_page=per_page,
+                                **kwargs) if resources.has_next else None,
+                'prev': url_for(endpoint, page=page - 1, per_page=per_page,
+                                **kwargs) if resources.has_prev else None
+            }
+        }
+        return data
 
-class User(UserMixin, db.Model):
+class User(PaginatedAPIMixin,UserMixin, db.Model):
     id = db.Column(db.Integer,primary_key=True)
     username = db.Column(db.String(128),index=True,unique=True,nullable=False)
     email = db.Column(db.String(128), index=True, unique=True, nullable=False)
@@ -47,7 +69,7 @@ class User(UserMixin, db.Model):
             'username': self.username,
             'user_level': self.user_level,
             'about_me':self.about_me,
-            'last_seen': self.start_time.isoformat() +'+7',
+            'last_seen': self.last_seen.isoformat() +'+7',
             'links': {
                 'self':url_for('api.get_user',id=self.id),
             }
@@ -72,7 +94,8 @@ class User(UserMixin, db.Model):
             return
         return User.query.get(id)
 
-class Post(db.Model):
+
+class Post(PaginatedAPIMixin,db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100),nullable = False , index = True)
     body = db.Column(db.String(1000))
@@ -110,7 +133,7 @@ class Post(db.Model):
         return User.query.join(participants,(participants.c.user_id == User.id)).\
             filter(participants.c.post_id == self.id).all()
 
-    def to_dict(self, include_email = False):
+    def to_dict(self):
         data = {'id': self.id,
             'title': self.title,
             'body': self.body,

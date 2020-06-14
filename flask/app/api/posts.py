@@ -1,14 +1,19 @@
 from app.api import bp
+from flask import jsonify,request
+from app.models import Post
 
-@bp.route('/Posts',methods=['Get'])
+@bp.route('/posts',methods=['Get'])
 def get_posts():
-    pass
+    page = request.args.get('page', 1, type=int)
+    per_page = min(request.args.get('per_page', 10, type=int), 100)
+    data = Post.to_collection_dict(Post.query, page, per_page, 'api.get_posts')
+    return jsonify(data)
 
-@bp.route('/Posts/<int:id>',methods=['Get'])
+@bp.route('/posts/<int:id>',methods=['Get'])
 def get_post(id):
-    pass
+    return jsonify(Post.query.get_or_404(id).to_dict())
 
-@bp.route('/Posts/<int:id>/participants',methods=['Get'])
+@bp.route('/posts/<int:id>/participants',methods=['Get'])
 def get_post_participants(id):
     pass
 
