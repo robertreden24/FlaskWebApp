@@ -1,8 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,BooleanField,SubmitField,TextAreaField,DateTimeField,IntegerField
+from wtforms import StringField,PasswordField,BooleanField,SubmitField,TextAreaField,DateTimeField,IntegerField,FileField
 from wtforms.fields.html5 import DateTimeLocalField
 from wtforms.validators import DataRequired, ValidationError,Email,EqualTo,Length,number_range
 from app.models import User
+
+
 
 class LoginForm(FlaskForm):
     username =StringField('Username',validators=[DataRequired()])
@@ -48,10 +50,11 @@ class PostForm(FlaskForm):
         DataRequired(),Length(min=1,max=100)])
     details = TextAreaField('project details', validators=[
         DataRequired(), Length(min=1, max=1000)])
-    start_time = DateTimeField('expected date of project',format='%m/%d/%y %H:%M')
+    start_time = DateTimeField('expected date of project', format='%d/%m/%Y')
     max_participant = IntegerField('No of participants',validators=[
         DataRequired(number_range(min=1,max=100)) ])
     socialHours = IntegerField('Number of Social Hours',validators=[number_range(min= 1, max = 100)])
+    image = FileField('image')
     submit = SubmitField('Post')
 
 class EmptyForm(FlaskForm):
