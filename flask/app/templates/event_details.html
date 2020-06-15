@@ -6,7 +6,7 @@
         <hr>
         <h4 style="font-family: candara">Event Details:</h4>
         <p class="text-capitalize" style="font-family: candara">{{ post.body }}</p>
-    
+            
         {% if user.user_level <= 2 %}
             <div class="form-group text-center">
                 <form action="{{ url_for('auth.verify', id =post.id) }}" method="post">
