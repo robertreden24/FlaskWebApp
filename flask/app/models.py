@@ -105,6 +105,7 @@ class Post(PaginatedAPIMixin,db.Model):
     max_participant = db.Column(db.Integer)
     verified = db.Column(db.BOOLEAN,nullable=False,default = False)
     socialHours = db.Column(db.Integer)
+    filename = db.Column(db.String(1000))
 
     participant_count = db.relationship('User', secondary=participants,
                                         primaryjoin =(participants.c.post_id == id),
@@ -149,6 +150,10 @@ class Post(PaginatedAPIMixin,db.Model):
             }
         }
         return data
+    def to_dict_filename(self):
+        data = {'filename': self.filename}
+        return data
+
     def from_dict(self,data):
         for field in ['title','body','start_time',
                       'user_id','max_participant','verified','socialHours']:

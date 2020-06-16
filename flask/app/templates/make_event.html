@@ -2,8 +2,9 @@
 {% block content %}
  <div class="container pt-5 pb-5">
     <div class="jumbotron col-md-4 mx-auto" style="background:transparent;">
-        <form method="POST" action="" novalidate>
+        <form method="POST" enctype="multipart/form-data" >
           {{ form.hidden_tag() }}
+            {{ form.csrf_token }}
           <fieldset class="form-group">
             <legend class="border-bottom mb-4 text-center" style="color:white;">
                 <h2 class="font-weight-light">Create an Event</h2>
@@ -18,7 +19,7 @@
              
             </div>
             <div class="form-group">
-                {{ form.start_time(type="datetime-local", class="form-control form-control-md font-weight-lighter", placeholder="Start Time", style="background-color:transparent !important; color:white;") }}
+                {{ form.start_time(class="form-control form-control-md font-weight-lighter", placeholder="dd/mm/yyyy",style="background-color:transparent !important; color:white;") }}
              
             </div>
             <div class="form-group">
@@ -28,10 +29,18 @@
                 {{ form.max_participant(type="number", max="100", min="1", class="form-control form-control-md font-weight-lighter", placeholder="Max Number of Participants", style="background-color:transparent !important; color:white;") }}
              
             </div>
+              <div class="form-group">
+                {{ form.image }}
+
+            </div>
+
           </fieldset>
           <div class="form-group">
             {{ form.submit(class="btn btn-sm btn-primary btn-block") }}
           </div>
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
         </form>
     </div> 
 </div>

@@ -1,16 +1,24 @@
-from app import db
+from app import db,images
 from app.auth import bp
-from flask import render_template,flash,redirect,url_for,current_app
+from flask import render_template,flash,redirect,url_for,current_app,send_from_directory
 from app.auth.forms import LoginForm,RegistrationForm,PostForm,EmptyForm
 from flask_login import current_user,login_user
 from app.models import User,Post
 from flask_login import logout_user
 from flask_login import login_required
-from flask import request
+from flask import request,jsonify
 from werkzeug.urls import url_parse
 from datetime import datetime
 from app.auth.forms import EditProfileForm,ResetPasswordRequestForm
 from app.auth.email import send_password_reset_email
+import requests
+from werkzeug.exceptions import NotFound, ServiceUnavailable
+
+
+@bp.route('/uploads/<path:filename>')
+def download_file(filename):
+    print("HERE")
+    return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
 
 @bp.route('/edit_profile',methods =['GET','POST'])
 @login_required
@@ -49,6 +57,7 @@ def index():
     # posts = Post.query.order_by(Post.timestamp.desc()).all() #change this to only query for verified ones only
     form = EmptyForm()
     verify = False
+    print(url_for('static', filename='css/custom.css'))
     if posts.has_next:
         next_url = url_for('auth.index', page=posts.next_num)
     else:
@@ -123,17 +132,39 @@ def user(username):
 @login_required
 def make_event():
     form = PostForm()
-    print("hello")
-    print(form.title.data)
-    print(form.start_time.data)
-    print(form.max_participant.data)
+    if form.is_submitted():
+        print("submitted")
+    if form.validate():
+        print("valid")
+
     if form.validate_on_submit():
-        print("in here")
-        post = Post(title=form.title.data, body = form.details.data,
-                    user_id = current_user.id,max_participant=form.max_participant.data,
-                    start_time = form.start_time.data,
-                    socialHours=form.socialHours,
-                    )
+        print(form.errors)
+        print(form.image.data)
+        if not form.image.data:
+            print('no files has been uploaded')
+            post = Post(title=form.title.data, body=form.details.data,
+                        user_id=current_user.id, max_participant=form.max_participant.data,
+                        start_time=form.start_time.data,
+                        socialHours=form.socialHours.data)
+        else:
+
+            filename = images.save(form.image.data)
+            url = images.path(filename)
+
+            url = url [11:]
+
+
+            filedata = {"image_filename": filename, "image_url": url}
+            # filedata = jsonify(filedata)
+            try:
+                new_Post = requests.post("http://127.0.0.1:5001/images/",json = filedata)    #CHANGE THIS LINK TO WHATEVER DOMAIN U HAVE FOR THE MICROSERVICE
+            except requests.exceptions.ConnectionError:
+                raise ServiceUnavailable("The upload service is unavailable.")
+
+            post = Post(title=form.title.data, body = form.details.data,
+                        user_id = current_user.id,max_participant=form.max_participant.data,
+                        start_time = form.start_time.data,
+                        socialHours=form.socialHours.data,filename=filename)
         db.session.add(post)
         db.session.commit()
         flash('We have received your application', 'success')
@@ -157,12 +188,23 @@ def verify_events():
                            next_url = next_url, prev_url=prev_url)
 
 
+
 @bp.route('/event/<id>')
 @login_required
 def event_details(id):
     post = Post.query.filter_by(id = id).first_or_404()
     form = EmptyForm()
     list_of_participants = post.participant_list()
+    if post.filename:
+
+        url = "http://127.0.0.1:5001/images/" + post.filename
+        data = requests.get(url)
+        print(data)
+        data = data.json()
+        print(data)
+        image_url = data["image_url"]
+        image_url = "http://127.0.0.1:5000/" + image_url
+        return render_template('event_details.html', post = post, user=current_user, form =form, list_of_participants=list_of_participants,image_url = image_url)
     return render_template('event_details.html', post = post, user=current_user, form =form, list_of_participants=list_of_participants)
 
 @bp.route('/join/<id>',methods=['Post'])
