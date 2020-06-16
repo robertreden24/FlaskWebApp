@@ -149,8 +149,11 @@ def make_event():
         else:
 
             filename = images.save(form.image.data)
+            print(filename)
             url = images.path(filename)
-
+            print(url)
+            url = images.url(filename)
+            print(url)
             url = url [11:]
 
 
