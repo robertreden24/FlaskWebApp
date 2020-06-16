@@ -4,11 +4,11 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
-    SQLALCHEMY_DATABASE_URI =  'mysql://newuser:password@localhost:3306/app'
-                                # 'mysql+pymysql://root:''@localhost/app.sql'
+    # SQLALCHEMY_DATABASE_URI =  'mysql://newuser:password@localhost:3306/app'
+    SQLALCHEMY_DATABASE_URI =  'mysql+pymysql://root:''@localhost/app'
     #                          'mysql:///' + os.path.join(basedir, 'app.sql')os.environ.get('DATABASE_URI') or
     UPLOADED_IMAGES_DEST = 'app/uploads/postimages'
-    UPLOAD_FOLDER = 'app/uploads'
+    UPLOAD_FOLDER = 'app/uploads/postimages'
 
     SQLALCHEMY_TRACK_MODIFICATIONS =False
     EVENTS_PER_PAGE = 10
