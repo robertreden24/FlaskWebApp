@@ -6,8 +6,8 @@
         <hr>
         <h4 style="font-family: candara">Event Details:</h4>
         <p class="text-capitalize" style="font-family: candara">{{ post.body }}</p>
-        {% if filename %}
-            <img src="{{url_for('auth.download_file', filename = filename )}}" class="img-fluid" alt="Responsive image">
+        {% if image_url %}
+            <img src="{{ image_url}}" class="img-fluid" alt="Responsive image">
         {% endif %}
         {% if user.user_level <= 2 %}
             <div class="form-group text-center">
