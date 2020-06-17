@@ -164,7 +164,7 @@ def make_event():
             filedata = {"image_filename": filename, "image_url": url}
             # filedata = jsonify(filedata)
             try:
-                new_Post = requests.post("http://127.0.0.1:5001/images/",json = filedata)    #CHANGE THIS LINK TO WHATEVER DOMAIN U HAVE FOR THE MICROSERVICE
+                new_Post = requests.post("http://localhost:5001/images/",json = filedata)    #CHANGE THIS LINK TO WHATEVER DOMAIN U HAVE FOR THE MICROSERVICE
             except requests.exceptions.ConnectionError:
                 flash("image upload service unavailable")
                 redirect(url_for("auth.make_event"))
@@ -205,13 +205,11 @@ def event_details(id):
     list_of_participants = post.participant_list()
     if post.filename:
 
-        url = "http://127.0.0.1:5001/images/" + post.filename
+        url = "http://localhost:5001/images/" + post.filename
         data = requests.get(url)
 
         data = data.json()
-        # filename = data ["image_filename"]
         image_url = data["image_url"]
-        # image_url = "http://127.0.0.1:5000/" + image_url
         return render_template('event_details.html', post = post, user=current_user, form =form, list_of_participants=list_of_participants,image_url = image_url)
 
 

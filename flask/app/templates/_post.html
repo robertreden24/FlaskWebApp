@@ -9,25 +9,27 @@
                 <hr>
                 <h4 style="font-family: candara">Details:</h4>
                 <p class="text-capitalize text-justify text-break" style="font-family: candara">{{ post.body }}<p>
+                <br>
+                <br>
                 {% if not post.has_joined(user) and user == current_user %}
                     <form action="{{ url_for('auth.join', id =post.id) }}" method="post">
                         <div class="form-group text-center">
                             {{ form.hidden_tag() }}
-                            {{ form.submit(value='Join', class="btn btn-primary", style="width:200px;") }}
+                            {{ form.submit(value='Join', class="btn btn-primary", style="width:150px;") }}
                         </div>
                     </form>
                 {% elif post.has_joined(user) %}
                     <form action="{{ url_for('auth.leave', id=post.id) }}" method="post">
                         <div class="form-group">
                             {{ form.hidden_tag() }}
-                            {{ form.submit(value='Unfollow', class="btn btn-primary", style="width:200px;") }}
+                            {{ form.submit(value='Unfollow', class="btn btn-primary", style="width:150px;") }}
                         </div>
                     </form>
                 {% endif %}
                 {% if  user.user_level < 3 and post.verified == False %}
                 <form action="{{ url_for('auth.verify', id =post.id) }}" method="post">
                     {{ form.hidden_tag() }}
-                    {{ form.submit(value='Verify', class="btn btn-primary", style="width:200px;") }}
+                    {{ form.submit(value='Verify', class="btn btn-primary", style="width:150px;") }}
                 </form>
 
                 {% endif %}

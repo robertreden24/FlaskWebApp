@@ -1,0 +1,10 @@
+Flask-Login
+Flask-Uploads
+Flask-WTF
+Markdown
+MarkupSafe
+PyMySQL
+uWSGI
+websocket_client
+Werkzeug
+WTForms
