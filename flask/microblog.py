@@ -6,7 +6,7 @@ application = create_app()
 # db.app = app
 # db.create_all()
 
-@app.shell_context_processor
+@application.shell_context_processor
 def make_shell_context():
     return{'db': db, 'User': User, 'Post': Post}
 
