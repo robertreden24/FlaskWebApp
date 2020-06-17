@@ -13,12 +13,12 @@ from app.auth.forms import EditProfileForm,ResetPasswordRequestForm
 from app.auth.email import send_password_reset_email
 import requests
 from werkzeug.exceptions import NotFound, ServiceUnavailable
-
-
-@bp.route('/uploads/<path:filename>')
+from werkzeug.utils import secure_filename
+import os
+@bp.route('/uploads/<filename>')
 def download_file(filename):
     print("HERE")
-    return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
+    return send_from_directory("uploads/postimages", filename, as_attachment=True)
 
 @bp.route('/edit_profile',methods =['GET','POST'])
 @login_required
@@ -147,14 +147,18 @@ def make_event():
                         start_time=form.start_time.data,
                         socialHours=form.socialHours.data)
         else:
-
-            filename = images.save(form.image.data)
-            print(filename)
-            url = images.path(filename)
-            print(url)
-            url = images.url(filename)
-            print(url)
-            url = url [11:]
+            f = form.image.data
+            filename = secure_filename(f.filename)
+            f.save(os.path.join(current_app.config['UPLOAD_FOLDER'],filename))
+            print(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+            url = url_for('auth.download_file',filename = filename)
+            # filename = images.save(form.image.data)
+            # print(filename)
+            # url = images.path(filename)
+            # print(url)
+            # url = images.url(filename)
+            # print(url)
+            # url = url [11:]
 
 
             filedata = {"image_filename": filename, "image_url": url}
@@ -162,7 +166,8 @@ def make_event():
             try:
                 new_Post = requests.post("http://127.0.0.1:5001/images/",json = filedata)    #CHANGE THIS LINK TO WHATEVER DOMAIN U HAVE FOR THE MICROSERVICE
             except requests.exceptions.ConnectionError:
-                raise ServiceUnavailable("The upload service is unavailable.")
+                flash("image upload service unavailable")
+                redirect(url_for("auth.make_event"))
 
             post = Post(title=form.title.data, body = form.details.data,
                         user_id = current_user.id,max_participant=form.max_participant.data,
@@ -202,12 +207,14 @@ def event_details(id):
 
         url = "http://127.0.0.1:5001/images/" + post.filename
         data = requests.get(url)
-        print(data)
+
         data = data.json()
-        print(data)
+        # filename = data ["image_filename"]
         image_url = data["image_url"]
-        image_url = "http://127.0.0.1:5000/" + image_url
+        # image_url = "http://127.0.0.1:5000/" + image_url
         return render_template('event_details.html', post = post, user=current_user, form =form, list_of_participants=list_of_participants,image_url = image_url)
+
+
     return render_template('event_details.html', post = post, user=current_user, form =form, list_of_participants=list_of_participants)
 
 @bp.route('/join/<id>',methods=['Post'])
