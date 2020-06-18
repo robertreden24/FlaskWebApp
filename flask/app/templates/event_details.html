@@ -7,7 +7,7 @@
         <h4 style="font-family: candara">Event Details:</h4>
         <p class="text-capitalize" style="font-family: candara">{{ post.body }}</p>
         {% if image_url %}
-            <img src="{{ image_url}}" class="img-fluid" alt="Responsive image">
+            <img src="{{ image_url }}" class="img-fluid" alt="Responsive image">
         {% endif %}
         {% if user.user_level <= 2 %}
             <div class="form-group text-center">
