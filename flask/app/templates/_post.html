@@ -13,7 +13,7 @@
                 <br>
                 {% if not post.has_joined(user) and user == current_user %}
                     <form action="{{ url_for('auth.join', id =post.id) }}" method="post">
-                        <div class="form-group text-center">
+                        <div class="form-group">
                             {{ form.hidden_tag() }}
                             {{ form.submit(value='Join', class="btn btn-primary", style="width:150px;") }}
                         </div>

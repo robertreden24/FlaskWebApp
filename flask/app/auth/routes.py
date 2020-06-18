@@ -15,6 +15,7 @@ import requests
 from werkzeug.exceptions import NotFound, ServiceUnavailable
 from werkzeug.utils import secure_filename
 import os
+import requests
 @bp.route('/uploads/<filename>')
 def download_file(filename):
     print("HERE")
@@ -206,7 +207,7 @@ def event_details(id):
     if post.filename:
 
         url = "http://localhost:5001/images/" + post.filename
-        data = requests.get(url)
+        data = requests.get(url, headers={'content-type':'application/json'})
 
         data = data.json()
         image_url = data["image_url"]

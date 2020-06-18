@@ -2,10 +2,10 @@
 {% block content %}
     <div class="container pt-5 pb-5">
         <div class="jumbotron" style="background-color: white;">
-        <h1 class="text-capitalize font-weight-bold" style="font-family: candara">{{ post.title }}</h1>
+        <h1 class="text-capitalize font-weight-lighter">{{ post.title }}</h1>
         <hr>
-        <h4 style="font-family: candara">Event Details:</h4>
-        <p class="text-capitalize" style="font-family: candara">{{ post.body }}</p>
+        <h4 class="font-weight-lighter">Event Details:</h4>
+        <p class="text-capitalize">{{ post.body }}</p>
         {% if image_url %}
             <img src="{{ image_url }}" class="img-fluid" alt="Responsive image">
         {% endif %}
@@ -13,7 +13,7 @@
             <div class="form-group text-center">
                 <form action="{{ url_for('auth.verify', id =post.id) }}" method="post">
                     {{ form.hidden_tag() }}
-                    {{ form.submit(value='Verify', class="btn btn-primary", style="width:200px;") }}
+                    {{ form.submit(value='Verify', class="btn btn-primary", style="width:200px;"") }}
                 </form>
             </div>
 
