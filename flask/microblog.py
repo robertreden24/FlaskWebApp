@@ -1,6 +1,9 @@
 from app import db,create_app
 from app.models import User,Post
-
+import sys
+if sys.version_info[0] >= 3:
+    unicode = str
+    
 app = create_app()
 # run this code in terminal with xampp run to create database
 # db.app = app
