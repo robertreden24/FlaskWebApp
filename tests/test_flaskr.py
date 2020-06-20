@@ -1,19 +1,31 @@
-import os
-import tempfile
-
 import pytest
-import sys
+
 
 @pytest.fixture
-def pytest_configure(config):
-    import sys
-    sys._called_from_test = True
+def error_fixture():
+    assert 0
 
-def pytest_unconfigure(config):
-    import sys 
-    del sys._called_from_test
 
-if hasattr(sys, '_called_from_test'):
-    print("called from within a test run")
-else:
-    print("called normally")
+def test_ok():
+    print("ok")
+
+
+def test_fail():
+    assert 0
+
+
+def test_error(error_fixture):
+    pass
+
+
+def test_skip():
+    pytest.skip("skipping this test")
+
+
+def test_xfail():
+    pytest.xfail("xfailing this test")
+
+
+@pytest.mark.xfail(reason="always xfail")
+def test_xpass():
+    pass
