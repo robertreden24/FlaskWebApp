@@ -14,7 +14,7 @@ on: [push]
 env:
   GITHUB_SHA: ${{ github.sha }}
   IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
-  IBM_CLOUD_REGION: ap-north
+  IBM_CLOUD_REGION: us-south
   ICR_NAMESPACE: ${{ secrets.ICR_NAMESPACE }}
   REGISTRY_HOSTNAME: us.icr.io
   IMAGE_NAME: commservicer-test
@@ -43,7 +43,7 @@ jobs:
     # Authenticate with IBM Cloud CLI
     - name: Authenticate with IBM Cloud CLI
       run: |
-        ibmcloud login --apikey ${{ secrets.IBM_CLOUD_API_KEY }} -r "${IBM_CLOUD_REGION}" -g default
+        ibmcloud login --apikey ${{ secrets.IBM_CLOUD_API_KEY }} -r us-south -g default
         ibmcloud cr region-set "${IBM_CLOUD_REGION}"
         ibmcloud cr login
 
