@@ -10,3 +10,8 @@ def pytest_configure(config):
 def pytest_unconfigure(config):
     import sys 
     del sys._called_from_test
+
+if hasattr(sys, '_called_from_test'):
+    return 'called from within a test run'
+else:
+    return 'called normally'
