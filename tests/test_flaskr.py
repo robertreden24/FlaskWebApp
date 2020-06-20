@@ -4,7 +4,6 @@ import tempfile
 import pytest
 
 from app import db
-app = create_app()
 
 @pytest.fixture
 def client():
