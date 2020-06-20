@@ -17,7 +17,7 @@ env:
   IBM_CLOUD_REGION: us-south
   ICR_NAMESPACE: ${{ secrets.ICR_NAMESPACE }}
   REGISTRY_HOSTNAME: us.icr.io
-  IMAGE_NAME: flaskwebapp
+  IMAGE_NAME: commservicer-test
   IKS_CLUSTER: commservicer-cluster
   DEPLOYMENT_NAME: commservicer
   PORT: 5001
@@ -58,7 +58,7 @@ jobs:
     # Push the image to IBM Container Registry
     - name: Push the image to ICR
       run: |
-        docker push us.icr.io/${{ secrets.ICR_NAMESPACE }}/flaskwebapp:${{ github.sha }}
+        docker push us.icr.io/${{ secrets.ICR_NAMESPACE }}/commservicer-test:${{ github.sha }}
 
     # Deploy the Docker image to the IKS cluster
     - name: Deploy to IKS
