@@ -43,7 +43,7 @@ jobs:
     # Authenticate with IBM Cloud CLI
     - name: Authenticate with IBM Cloud CLI
       run: |
-        ibmcloud login --apikey ibmcloudsecret -r ap-north -g default
+        ibmcloud login --apikey ${{ secrets.IBM_CLOUD_API_KEY }} -r ap-north -g default
         ibmcloud cr region-set ap-north
         ibmcloud cr login
 
