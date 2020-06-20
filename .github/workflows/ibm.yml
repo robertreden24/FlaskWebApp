@@ -69,6 +69,6 @@ jobs:
         kubectl create deployment commservicer --image=us.icr.io/${{ secrets.ICR_NAMESPACE }}/commservicer-test:${{ github.sha }} --dry-run -o yaml > deployment.yaml
         kubectl apply -f deployment.yaml
         kubectl rollout status deployment/commservicer
-        kubectl create service loadbalancer commservicer --tcp=80:$PORT --dry-run -o yaml > service.yaml
+        kubectl create service loadbalancer commservicer --tcp=80:5001 --dry-run -o yaml > service.yaml
         kubectl apply -f service.yaml
         kubectl get services -o wide
